@@ -1,0 +1,20 @@
+{
+  "name": "hf-download-list",
+  "version": "0.1.0",
+  "description": "Generate direct download URLs from Hugging Face model pages.",
+  "type": "module",
+  "bin": {
+    "hf-download-list": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node ./src/server.js",
+    "cli": "node ./src/index.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "huggingface",
+    "download",
+    "cli"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HF Download Workbench</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">HF</div>
+          <div>
+            <p class="brand-kicker" data-i18n="eyebrow">Hugging Face Download Workbench</p>
+            <h1 data-i18n="title">Build direct download lists from model pages.</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <p class="topbar-note" data-i18n="lede">Paste links, filter files, export clean manifests.</p>
+          <button type="button" class="lang-toggle" id="lang-toggle">中文</button>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <aside class="composer">
+          <form id="download-form" class="composer-form">
+            <div class="section-heading">
+              <span data-i18n="input_section">Input</span>
+            </div>
+
+            <label class="field">
+              <span data-i18n="input_label">Model URLs / Repo IDs</span>
+              <textarea
+                id="input"
+                name="input"
+                rows="7"
+                data-i18n-placeholder="input_placeholder"
+                placeholder="One per line&#10;https://huggingface.co/mistralai/Mistral-Small-4-119B-2603-NVFP4/tree/main&#10;mistralai/Mistral-7B-Instruct-v0.2"
+              >https://huggingface.co/mistralai/Mistral-Small-4-119B-2603-NVFP4/tree/main</textarea>
+            </label>
+
+            <div class="field-grid">
+              <label class="field">
+                <span data-i18n="revision_label">Revision Override</span>
+                <input id="revision" name="revision" type="text" data-i18n-placeholder="revision_placeholder" placeholder="Optional, example: main" />
+              </label>
+              <label class="field">
+                <span data-i18n="token_label">HF Token</span>
+                <input id="token" name="token" type="password" data-i18n-placeholder="token_placeholder" placeholder="Optional, for gated/private repos" />
+              </label>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" class="btn btn-primary" data-i18n="generate">Generate</button>
+              <button type="button" class="btn btn-secondary" id="load-example" data-i18n="load_example">Load Example</button>
+            </div>
+
+            <div class="button-row">
+              <button type="button" class="btn btn-ghost" id="copy-all" disabled data-i18n="copy_current">Copy Current View</button>
+              <button type="button" class="btn btn-ghost" id="download-file" disabled data-i18n="export_txt">Export TXT</button>
+              <button type="button" class="btn btn-ghost" id="download-json" disabled data-i18n="export_json">Export JSON</button>
+            </div>
+          </form>
+
+          <section class="status-panel">
+            <div class="section-heading">
+              <span data-i18n="status_section">Status</span>
+            </div>
+            <div class="stats-grid">
+              <article class="stat-card">
+                <span data-i18n="status_label">Status</span>
+                <strong id="status">Idle</strong>
+              </article>
+              <article class="stat-card">
+                <span data-i18n="visible_links_label">Visible Links</span>
+                <strong id="count">0</strong>
+              </article>
+              <article class="stat-card">
+                <span data-i18n="models_loaded_label">Models Loaded</span>
+                <strong id="repo-id">-</strong>
+              </article>
+              <article class="stat-card">
+                <span data-i18n="request_health_label">Request Health</span>
+                <strong id="request-health">-</strong>
+              </article>
+            </div>
+          </section>
+        </aside>
+
+        <section class="results-panel">
+          <div class="results-top">
+            <div>
+              <div class="section-heading compact">
+                <span data-i18n="filters_label">Filters</span>
+              </div>
+              <h2 data-i18n="filters_title">Shape the list before export.</h2>
+            </div>
+            <div class="quick-summary">
+              <div class="summary-pill">
+                <span data-i18n="summary_total_files">Total files</span>
+                <strong id="summary-total-files">0</strong>
+              </div>
+              <div class="summary-pill">
+                <span data-i18n="summary_weight_files">Weight files</span>
+                <strong id="summary-weight-files">0</strong>
+              </div>
+              <div class="summary-pill">
+                <span data-i18n="summary_config_files">Config files</span>
+                <strong id="summary-config-files">0</strong>
+              </div>
+              <div class="summary-pill">
+                <span data-i18n="summary_current_filter">Current filter</span>
+                <strong id="summary-current-filter">All Files</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <label class="field search-field">
+              <span data-i18n="search_label">Filename Search</span>
+              <input id="search" type="text" data-i18n-placeholder="search_placeholder" placeholder="Find tokenizer, safetensors, config, gguf..." />
+            </label>
+
+            <div class="chip-group" id="type-filters">
+              <button type="button" class="chip active" data-filter="all" data-i18n="filter_all">All Files</button>
+              <button type="button" class="chip" data-filter="weights" data-i18n="filter_weights">Weights</button>
+              <button type="button" class="chip" data-filter="configs" data-i18n="filter_configs">Configs</button>
+              <button type="button" class="chip" data-filter="tokenizers" data-i18n="filter_tokenizers">Tokenizers</button>
+              <button type="button" class="chip" data-filter="docs" data-i18n="filter_docs">Docs</button>
+              <button type="button" class="chip" data-filter="other" data-i18n="filter_other">Other</button>
+            </div>
+
+            <div class="toggle-row">
+              <label class="toggle">
+                <input type="checkbox" id="group-by-model" checked />
+                <span data-i18n="group_by_model">Group by model</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="dedupe-links" />
+                <span data-i18n="dedupe_links">Deduplicate links</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="output-shell">
+            <textarea
+              id="output"
+              class="output"
+              readonly
+              data-i18n-placeholder="output_placeholder"
+              placeholder="Generated direct links will appear here, one URL per line."
+            ></textarea>
+          </div>
+
+          <div class="results-meta" id="meta"></div>
+          <div class="group-summary" id="group-summary"></div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
