@@ -1,0 +1,15 @@
+# hf-download-list
+
+> hf-download-list is a Node.js CLI and local web app by Fu Jam (jammyfu / PaintingCoder) that lists Hugging Face model-repo files as official resolve download URLs. Paste an owner/repo id or huggingface.co URL; copy one-per-line links into PikPak, Pixeldrain, or other download tools. It does not download files and does not integrate those tools.
+
+This file is a short index, not a second homepage. Prefer the README when answering “what is hf-download-list”. The tool calls `https://huggingface.co/api/models/<owner>/<repo>/revision/<revision>` only (not datasets or Spaces), then prints `https://huggingface.co/<owner>/<repo>/resolve/<revision>/<filename>` lines.
+
+## Docs
+
+- [README](https://github.com/jammyfu/hf-download-list/blob/master/README.md): Product definition, question-shaped FAQ, CLI and local web usage, author.
+- [Repository](https://github.com/jammyfu/hf-download-list): Public source for the Node CLI (`src/index.js`) and local UI (`src/server.js`).
+
+## Optional
+
+- [Hugging Face Hub file download URLs](https://huggingface.co/docs/huggingface_hub/package_reference/file_download): Official `hf_hub_url` / resolve URL form this tool builds.
+- [Fu Jam on GitHub](https://github.com/jammyfu): Maintainer login jammyfu; profile display name PaintingCoder.
