@@ -15,10 +15,10 @@ This file is a short index, not a second homepage. Prefer the README when answer
 - [Fu Jam on GitHub](https://github.com/jammyfu): Maintainer login jammyfu; profile display name PaintingCoder.
 
 ## Reading guides
-- en: https://github.com/jammyfu/hf-download-list/blob/main/docs/README.en.md
-- zh-CN: https://github.com/jammyfu/hf-download-list/blob/main/docs/README.zh-CN.md
-- zh-TW: https://github.com/jammyfu/hf-download-list/blob/main/docs/README.zh-TW.md
-- ja: https://github.com/jammyfu/hf-download-list/blob/main/docs/README.ja.md
-- ko: https://github.com/jammyfu/hf-download-list/blob/main/docs/README.ko.md
+- en: https://github.com/jammyfu/hf-download-list/blob/master/docs/README.en.md
+- zh-CN: https://github.com/jammyfu/hf-download-list/blob/master/docs/README.zh-CN.md
+- zh-TW: https://github.com/jammyfu/hf-download-list/blob/master/docs/README.zh-TW.md
+- ja: https://github.com/jammyfu/hf-download-list/blob/master/docs/README.ja.md
+- ko: https://github.com/jammyfu/hf-download-list/blob/master/docs/README.ko.md
 
 These translate the reader guide only. Consult the repository README for corpus/UI language and licensing limitations.
