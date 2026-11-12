@@ -1,8 +1,40 @@
 # hf-download-list
 
-hf-download-list is a Node.js CLI and local web app by Fu Jam (jammyfu / PaintingCoder). It lists Hugging Face model-repo files as official resolve download URLs. Paste an owner/repo id or huggingface.co URL, then copy one-per-line links into PikPak, Pixeldrain, or other download tools. It does not download files.
+![Project header](.github/social-preview.png)
 
-hf-download-list 是 Fu Jam（GitHub：jammyfu，显示名 PaintingCoder）写的 Node.js 命令行和本地网页工具：输入 Hugging Face 模型仓库地址或 `owner/repo`，列出官方 `resolve` 直链，方便粘贴到 PikPak、Pixeldrain 等下载工具。它本身不下载文件。
+[English](docs/README.en.md) · [简体中文](docs/README.zh-CN.md) · [繁體中文（臺灣）](docs/README.zh-TW.md) · [日本語](docs/README.ja.md) · [한국어](docs/README.ko.md)
+
+List Hugging Face model files as official download URLs. Use one model in the CLI or multiple models in the web workbench. **Lists links, not a downloader.**
+
+| Need | Use | Boundary |
+| --- | --- | --- |
+| One model → file URLs | CLI, TXT / JSON export | Model repos only |
+| Compare multiple file lists | Web UI: filters, grouping, deduplication | English / Chinese UI |
+| Private or gated models | Optional HF token | Access must already be granted; links do not carry authorization |
+
+## Quick start
+
+```bash
+git clone https://github.com/jammyfu/hf-download-list.git
+cd hf-download-list
+npm start
+# Open http://localhost:4173
+```
+
+CLI: replace `owner/model` with an accessible model repository.
+
+```bash
+node src/index.js owner/model --format json
+npm test
+```
+
+## Security and scope
+
+The server does not explicitly restrict its listening interface. Do not expose it to the internet or an untrusted network. The optional web token goes through your server to Hugging Face; use least-privilege tokens and never share token-bearing screenshots or shell history. Generated URLs do not bypass gated model approval. Third-party download tools may need their own authentication and may not accept these URLs.
+
+## License status
+
+`package.json` declares MIT, but no LICENSE file is present. Confirm the grant with the maintainer before redistributing. Upstream model licenses and access terms apply separately.
 
 ## What is hf-download-list?
 
@@ -14,7 +46,7 @@ No. hf-download-list only lists URLs. It does not fetch model weights, write a c
 
 ## Can I paste the URLs into PikPak or Pixeldrain?
 
-Yes. The default text output is one Hugging Face `resolve` URL per line, which you can paste into PikPak, Pixeldrain, or other download tools. There is no PikPak or Pixeldrain API, account login, or upload backend in this repo. Those names are paste targets, not built-in download backends.
+The text output is one official Hugging Face `resolve` URL per line. Whether another download tool accepts it depends on that service and the model access requirements. There is no PikPak or Pixeldrain API, account login, or upload backend in this repo. Those names are paste targets, not built-in download backends.
 
 ## How do I generate Hugging Face direct download URLs?
 
